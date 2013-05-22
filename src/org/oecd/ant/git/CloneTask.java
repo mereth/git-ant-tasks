@@ -102,7 +102,7 @@ public class CloneTask extends Task {
 					throw new BuildException("detached HEAD");
 
 				String head = headRef.getTarget().getName();
-				if (!head.equals(branch))
+				if (branch != null && !head.equals(branch))
 					throw new BuildException(branch + " doesn't seem to exists");
 
 				Ref testRef = git.getRepository().getAllRefs().get(head);
