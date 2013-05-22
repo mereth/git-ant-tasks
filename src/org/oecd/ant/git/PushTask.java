@@ -134,8 +134,10 @@ public class PushTask extends AbstractGitTask {
 		push.setReceivePack(receivePack);
 
 		List<RefSpec> rs = new ArrayList<RefSpec>();
-		for (String refspec : refSpecs.split("[ ,]")) {
-			rs.add(new RefSpec(refspec));
+		if (refSpecs != null) {
+			for (String refspec : refSpecs.split("[ ,]")) {
+				rs.add(new RefSpec(refspec));
+			}
 		}
 		push.setRefSpecs(rs);
 
