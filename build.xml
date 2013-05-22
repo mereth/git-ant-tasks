@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="Validation ANT">
+	
+	<taskdef resource="org/oecd/ant/git/antlib.xml">
+		<classpath>
+			<pathelement path="${basedir}\bin"/>
+			<pathelement location="E:\Sandbox\jgit\org.eclipse.egit.repository-2.3.1.201302201838-r\plugins\org.eclipse.jgit_2.3.1.201302201838-r.jar"/>
+			<pathelement location="E:\Sandbox\jgit\org.eclipse.egit.repository-2.3.1.201302201838-r\plugins\com.jcraft.jsch_0.1.46.v201205102330.jar"/>
+		</classpath>
+	</taskdef>
+	
+	<property name="repo" value="F:\test"/>
+	
+	<target name="test"><!--
+
+		<gitdiff repo="${repo}" cached="true" oldrev="HEAD^"/>
+		<gitdiff repo="${repo}" output="test.diff"/>
+		
+		<gitextract repo="${repo}" rev="HEAD^^" srcfile="files/book-thumbnails.xml" dstfile="book-thumbnails.xml"/>
+		
+		-->
+	</target>
+
+	<target name="test-clone">
+		<property name="repo2" value="test-clone"/>
+		<delete dir="${repo2}"></delete>
+		<gitclone repo="${repo2}" uri="${repo}" branch="dev-navigation">
+			<credentials username="toto" password="tata"/>
+		</gitclone>
+	</target>
+
+	<target name="test-status">
+		<gitstatus repo="${repo}" modified="testid" isclean="pwet"/>
+		
+		<pathconvert property="dd">
+			<resources refid="testid"/>
+		</pathconvert>
+		
+		<echo message="${dd}"/>
+	</target>
+
+	<target name="test-add">
+		<gitadd repo="${repo}" update="true"/>
+	</target>
+
+	<target name="test-commit">
+		<gitcommit repo="${repo}" all="true" message="kikoo" revproperty="p-rev-commit" />
+		<echo message="${p-rev-commit}"/>
+	</target>
+
+	<target name="test-ref">
+		<gitref repo="${repo}" name="HEAD" property="last"/>
+		<echo message="${last}"/>
+		<sequential>
+			<local name="last"/>
+			<gitref repo="${repo}" name="HEAD" property="last" length="8"/>
+			<echo message="${last}"/>
+		</sequential>
+	</target>
+</project>
