@@ -9,6 +9,7 @@
 		</classpath>
 	</taskdef>
 	
+	<property name="remote" value="E:\Sandbox\dlutwbootstrap-demo"/>
 	<property name="repo" value="F:\test"/>
 	
 	<target name="test"><!--
@@ -22,11 +23,8 @@
 	</target>
 
 	<target name="test-clone">
-		<property name="repo2" value="test-clone"/>
-		<delete dir="${repo2}"></delete>
-		<gitclone repo="${repo2}" uri="${repo}" branch="dev-navigation">
-			<credentials username="toto" password="tata"/>
-		</gitclone>
+		<delete dir="${repo}"></delete>
+		<gitclone repo="${repo}" uri="${remote}" branch="dev-navigation"/>
 	</target>
 
 	<target name="test-status">
@@ -47,7 +45,11 @@
 		<gitcommit repo="${repo}" all="true" message="kikoo" revproperty="p-rev-commit" />
 		<echo message="${p-rev-commit}"/>
 	</target>
-
+	
+	<target name="test-push">
+		<gitpush repo="${repo}"/>
+	</target>
+	
 	<target name="test-ref">
 		<gitref repo="${repo}" name="HEAD" property="last"/>
 		<echo message="${last}"/>
@@ -57,4 +59,6 @@
 			<echo message="${last}"/>
 		</sequential>
 	</target>
+	
+	
 </project>

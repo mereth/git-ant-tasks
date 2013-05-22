@@ -1,5 +1,9 @@
 package org.oecd.ant.git;
 
+import static org.eclipse.jgit.lib.Constants.R_HEADS;
+import static org.eclipse.jgit.lib.Constants.R_REMOTES;
+import static org.eclipse.jgit.lib.Constants.R_TAGS;
+
 import java.io.File;
 
 import org.apache.tools.ant.BuildException;
@@ -46,4 +50,13 @@ public abstract class AbstractGitTask extends Task {
 		}
 	}
 
+	protected String abbreviateRef(String dst, boolean abbreviateRemote) {
+		if (dst.startsWith(R_HEADS))
+			dst = dst.substring(R_HEADS.length());
+		else if (dst.startsWith(R_TAGS))
+			dst = dst.substring(R_TAGS.length());
+		else if (abbreviateRemote && dst.startsWith(R_REMOTES))
+			dst = dst.substring(R_REMOTES.length());
+		return dst;
+	}
 }

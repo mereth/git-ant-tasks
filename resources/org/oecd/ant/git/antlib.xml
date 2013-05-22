@@ -4,6 +4,7 @@
   <taskdef name="gitcommit" classname="org.oecd.ant.git.CommitTask"/>
   <taskdef name="gitdiff" classname="org.oecd.ant.git.DiffTask"/>
   <taskdef name="gitextract" classname="org.oecd.ant.git.ExtractTask"/>
+  <taskdef name="gitpush" classname="org.oecd.ant.git.PushTask"/>
   <taskdef name="gitref" classname="org.oecd.ant.git.RefTask"/>
   <taskdef name="gitstatus" classname="org.oecd.ant.git.StatusTask"/>
 </antlib>
