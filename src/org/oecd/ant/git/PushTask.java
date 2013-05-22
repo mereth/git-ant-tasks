@@ -148,6 +148,9 @@ public class PushTask extends AbstractGitTask {
 		push.setThin(thin);
 		push.setTimeout(timeout);
 
+		if (credentials != null)
+			push.setCredentialsProvider(credentials.toCredentialsProvider());
+
 		Iterable<PushResult> results = push.call();
 
 		for (PushResult result : results) {
