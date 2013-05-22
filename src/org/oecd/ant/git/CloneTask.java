@@ -66,6 +66,8 @@ public class CloneTask extends Task {
 	}
 
 	public void addCredentials(CredentialsElement credentials) {
+		if (this.credentials != null)
+			throw new BuildException(":only_one");
 		this.credentials = credentials;
 	}
 
