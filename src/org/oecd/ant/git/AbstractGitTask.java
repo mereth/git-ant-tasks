@@ -12,6 +12,8 @@ import org.eclipse.jgit.api.Git;
 
 public abstract class AbstractGitTask extends Task {
 
+	public static final String REPO_ATTRIBUTE = "repo";
+
 	private File repo;
 	private boolean verbose;
 

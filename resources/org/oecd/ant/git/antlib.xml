@@ -1,4 +1,6 @@
+<?xml version="1.0"?>
 <antlib>
+  <taskdef name="git" classname="org.oecd.ant.git.GitTask"/>
   <taskdef name="gitadd" classname="org.oecd.ant.git.AddTask"/>
   <taskdef name="gitclone" classname="org.oecd.ant.git.CloneTask"/>
   <taskdef name="gitcommit" classname="org.oecd.ant.git.CommitTask"/>
