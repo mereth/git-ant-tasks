@@ -69,7 +69,7 @@ public class ConfigTask extends AbstractGitTask {
 
 			String value = option.getValue();
 			if (value != null) {
-				if (value.isEmpty())
+				if (value.length() == 0)
 					conf.unset(option.getSection(), option.getSubsection(), option.getName());
 				else
 					conf.setString(option.getSection(), option.getSubsection(), option.getName(), value);

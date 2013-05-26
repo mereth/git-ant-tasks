@@ -14,17 +14,14 @@ public class GitFiles implements ResourceCollection {
 		files.add(file);
 	}
 
-	@Override
 	public Iterator<FileResource> iterator() {
 		return files.iterator();
 	}
 
-	@Override
 	public int size() {
 		return files.size();
 	}
 
-	@Override
 	public boolean isFilesystemOnly() {
 		return true;
 	}

@@ -11,11 +11,9 @@ public class SimpleProgressMonitor implements ProgressMonitor {
 		this.task = task;
 	}
 
-	@Override
 	public void start(int totalTasks) {
 	}
 
-	@Override
 	public void beginTask(String title, int totalWork) {
 		String message;
 		if (totalWork == ProgressMonitor.UNKNOWN) {
@@ -26,15 +24,12 @@ public class SimpleProgressMonitor implements ProgressMonitor {
 		task.log(message);
 	}
 
-	@Override
 	public void update(int completed) {
 	}
 
-	@Override
 	public void endTask() {
 	}
 
-	@Override
 	public boolean isCancelled() {
 		return false;
 	}

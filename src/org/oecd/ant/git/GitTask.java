@@ -13,7 +13,6 @@ public class GitTask extends AbstractGitTask implements TaskContainer {
 
 	private final List<Task> nestedTasks = new ArrayList<Task>();
 
-	@Override
 	public void addTask(Task task) {
 		nestedTasks.add(task);
 	}
