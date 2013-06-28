@@ -1,6 +1,9 @@
 package org.oecd.ant.git;
 
+import java.util.Set;
+
 import org.apache.tools.ant.PropertyHelper;
+import org.apache.tools.ant.types.ResourceCollection;
 import org.apache.tools.ant.types.resources.FileResource;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.Status;
@@ -50,7 +53,6 @@ public class StatusTask extends AbstractGitTask {
 
 	@Override
 	protected void checkProperties() throws Exception {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -65,64 +67,43 @@ public class StatusTask extends AbstractGitTask {
 		}
 
 		if (untracked != null) {
-			GitFiles resources = new GitFiles();
-
-			for (String filename : status.getUntracked()) {
-				resources.add(new FileResource(getRepo(), filename));
-			}
-
+			ResourceCollection resources = buildResourcesCollection(status.getUntracked());
 			getProject().addReference(untracked, resources);
 		}
 
 		if (added != null) {
-			GitFiles resources = new GitFiles();
-
-			for (String filename : status.getAdded()) {
-				resources.add(new FileResource(getRepo(), filename));
-			}
-
+			ResourceCollection resources = buildResourcesCollection(status.getAdded());
 			getProject().addReference(added, resources);
 		}
 
 		if (modified != null) {
-			GitFiles resources = new GitFiles();
-
-			for (String filename : status.getModified()) {
-				resources.add(new FileResource(getRepo(), filename));
-			}
-
+			ResourceCollection resources = buildResourcesCollection(status.getModified());
 			getProject().addReference(modified, resources);
 		}
 
 		if (changed != null) {
-			GitFiles resources = new GitFiles();
-
-			for (String filename : status.getChanged()) {
-				resources.add(new FileResource(getRepo(), filename));
-			}
-
+			ResourceCollection resources = buildResourcesCollection(status.getChanged());
 			getProject().addReference(changed, resources);
 		}
 
 		if (missing != null) {
-			GitFiles resources = new GitFiles();
-
-			for (String filename : status.getMissing()) {
-				resources.add(new FileResource(getRepo(), filename));
-			}
-
+			ResourceCollection resources = buildResourcesCollection(status.getMissing());
 			getProject().addReference(missing, resources);
 		}
 
 		if (removed != null) {
-			GitFiles resources = new GitFiles();
-
-			for (String filename : status.getRemoved()) {
-				resources.add(new FileResource(getRepo(), filename));
-			}
-
+			ResourceCollection resources = buildResourcesCollection(status.getRemoved());
 			getProject().addReference(removed, resources);
 		}
 	}
 
+	private ResourceCollection buildResourcesCollection(Set<String> source) {
+		GitFiles destination = new GitFiles();
+
+		for (String filename : source) {
+			destination.add(new FileResource(getRepo(), filename));
+		}
+
+		return destination;
+	}
 }
