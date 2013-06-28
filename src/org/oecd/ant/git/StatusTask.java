@@ -13,6 +13,7 @@ import org.oecd.ant.git.types.GitFiles;
 public class StatusTask extends AbstractGitTask {
 
 	private String isclean;
+	private String isdirty;
 
 	private String untracked;
 	private String added;
@@ -25,6 +26,10 @@ public class StatusTask extends AbstractGitTask {
 
 	public void setIsclean(String isclean) {
 		this.isclean = isclean;
+	}
+
+	public void setIsdirty(String isdirty) {
+		this.isdirty = isdirty;
 	}
 
 	public void setUntracked(String untracked) {
@@ -62,8 +67,12 @@ public class StatusTask extends AbstractGitTask {
 
 		Status status = sc.call();
 
-		if (status.isClean() && isclean != null) {
+		if (isclean != null && status.isClean()) {
 			PropertyHelper.getPropertyHelper(getProject()).setNewProperty(isclean, "true");
+		}
+
+		if (isdirty != null && !status.isClean()) {
+			PropertyHelper.getPropertyHelper(getProject()).setNewProperty(isdirty, "true");
 		}
 
 		if (untracked != null) {
