@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.List;
 
+import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.types.resources.FileResource;
+import org.apache.tools.ant.util.FileUtils;
 import org.eclipse.jgit.api.DiffCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.NoHeadException;
@@ -22,17 +24,21 @@ public class DiffTask extends AbstractGitTask {
 
 	private String filter;
 
-	private String output;
+	private File output;
 
 	private boolean cached;
 	private String oldrev;
 	private String newrev;
 
+	private String added;
+	private String changed;
+	private String removed;
+
 	public void setFilter(String filter) {
 		this.filter = filter;
 	}
 
-	public void setOutput(String output) {
+	public void setOutput(File output) {
 		this.output = output;
 	}
 
@@ -48,9 +54,23 @@ public class DiffTask extends AbstractGitTask {
 		this.newrev = newrev;
 	}
 
+	public void setAdded(String added) {
+		this.added = added;
+	}
+
+	public void setChanged(String changed) {
+		this.changed = changed;
+	}
+
+	public void setRemoved(String removed) {
+		this.removed = removed;
+	}
+
 	@Override
 	protected void checkProperties() throws Exception {
-
+		if (cached && newrev != null) {
+			throw new BuildException("You can't use 'cached' and 'newrev' attribute at the same time.");
+		}
 	}
 
 	@Override
@@ -58,9 +78,8 @@ public class DiffTask extends AbstractGitTask {
 		DiffCommand dc = git.diff();
 
 		if (output != null) {
-			File outputFile = new File(output);
-
-			FileOutputStream stream = new FileOutputStream(outputFile);
+			FileUtils.getFileUtils().createNewFile(output, true);
+			FileOutputStream stream = new FileOutputStream(output);
 			dc.setOutputStream(stream);
 
 		} else {
@@ -101,6 +120,18 @@ public class DiffTask extends AbstractGitTask {
 			default:
 				throw new Exception("Unsupported: " + entry.getChangeType());
 			}
+		}
+
+		if (this.added != null) {
+			getProject().addReference(this.added, added);
+		}
+
+		if (this.changed != null) {
+			getProject().addReference(this.changed, modified);
+		}
+
+		if (this.removed != null) {
+			getProject().addReference(this.removed, deleted);
 		}
 	}
 
