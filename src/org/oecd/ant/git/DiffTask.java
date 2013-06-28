@@ -1,7 +1,9 @@
 package org.oecd.ant.git;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.List;
 
 import org.apache.tools.ant.BuildException;
@@ -77,61 +79,72 @@ public class DiffTask extends AbstractGitTask {
 	protected void executeCustom(Git git) throws Exception {
 		DiffCommand dc = git.diff();
 
-		if (output != null) {
-			FileUtils.getFileUtils().createNewFile(output, true);
-			FileOutputStream stream = new FileOutputStream(output);
-			dc.setOutputStream(stream);
-
-		} else {
-			dc.setShowNameAndStatusOnly(true);
-		}
-
-		if (oldrev != null) {
-			dc.setOldTree(getTreeIterator(git, oldrev));
-		}
-
-		if (cached) {
-			dc.setCached(cached);
-		} else if (newrev != null) {
-			dc.setNewTree(getTreeIterator(git, newrev));
-		}
-
-		if (filter != null) {
-			dc.setPathFilter(PathFilter.create(filter));
-		}
-
-		List<DiffEntry> diffs = dc.call();
-
-		GitFiles added = new GitFiles();
-		GitFiles modified = new GitFiles();
-		GitFiles deleted = new GitFiles();
-
-		for (DiffEntry entry : diffs) {
-			switch (entry.getChangeType()) {
-			case ADD:
-				added.add(new FileResource(getRepo(), entry.getNewPath()));
-				break;
-			case MODIFY:
-				modified.add(new FileResource(getRepo(), entry.getNewPath()));
-				break;
-			case DELETE:
-				deleted.add(new FileResource(getRepo(), entry.getOldPath()));
-				break;
-			default:
-				throw new Exception("Unsupported: " + entry.getChangeType());
+		OutputStream stream = null;
+		try {
+			if (output != null) {
+				FileUtils.getFileUtils().createNewFile(output, true);
+				stream = new BufferedOutputStream(new FileOutputStream(output));
+				dc.setOutputStream(stream);
+			} else {
+				dc.setShowNameAndStatusOnly(true);
 			}
-		}
 
-		if (this.added != null) {
-			getProject().addReference(this.added, added);
-		}
+			if (oldrev != null) {
+				dc.setOldTree(getTreeIterator(git, oldrev));
+			}
 
-		if (this.changed != null) {
-			getProject().addReference(this.changed, modified);
-		}
+			if (cached) {
+				dc.setCached(cached);
+			} else if (newrev != null) {
+				dc.setNewTree(getTreeIterator(git, newrev));
+			}
 
-		if (this.removed != null) {
-			getProject().addReference(this.removed, deleted);
+			if (filter != null) {
+				dc.setPathFilter(PathFilter.create(filter));
+			}
+
+			List<DiffEntry> diffs = dc.call();
+
+			GitFiles added = new GitFiles();
+			GitFiles modified = new GitFiles();
+			GitFiles deleted = new GitFiles();
+
+			for (DiffEntry entry : diffs) {
+				switch (entry.getChangeType()) {
+				case ADD:
+					if (this.added != null) {
+						added.add(new FileResource(getRepo(), entry.getNewPath()));
+					}
+					break;
+				case MODIFY:
+					if (this.changed != null) {
+						modified.add(new FileResource(getRepo(), entry.getNewPath()));
+					}
+					break;
+				case DELETE:
+					if (this.removed != null) {
+						deleted.add(new FileResource(getRepo(), entry.getOldPath()));
+					}
+					break;
+				default:
+					throw new Exception("Unsupported: " + entry.getChangeType());
+				}
+			}
+
+			if (this.added != null) {
+				getProject().addReference(this.added, added);
+			}
+
+			if (this.changed != null) {
+				getProject().addReference(this.changed, modified);
+			}
+
+			if (this.removed != null) {
+				getProject().addReference(this.removed, deleted);
+			}
+		} finally {
+			if (stream != null)
+				stream.close();
 		}
 	}
 
