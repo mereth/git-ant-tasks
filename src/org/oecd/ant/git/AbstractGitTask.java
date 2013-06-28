@@ -7,6 +7,7 @@ import static org.eclipse.jgit.lib.Constants.R_TAGS;
 import java.io.File;
 
 import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.PropertyHelper;
 import org.apache.tools.ant.Task;
 import org.eclipse.jgit.api.Git;
 
@@ -16,6 +17,8 @@ public abstract class AbstractGitTask extends Task {
 
 	private File repo;
 	private boolean verbose;
+	private String ifcond;
+	private String unlesscond;
 
 	public File getRepo() {
 		return repo;
@@ -33,13 +36,48 @@ public abstract class AbstractGitTask extends Task {
 		this.verbose = verbose;
 	}
 
+	public String getIf() {
+		return ifcond;
+	}
+
+	public void setIf(String ifcond) {
+		this.ifcond = ifcond;
+	}
+
+	public String getUnless() {
+		return unlesscond;
+	}
+
+	public void setUnless(String unlesscond) {
+		this.unlesscond = unlesscond;
+	}
+
 	protected abstract void checkProperties() throws Exception;
 
 	protected abstract void executeCustom(Git git) throws Exception;
 
 	@Override
 	public final void execute() throws BuildException {
+
+		boolean skip = false;
+		if (getIf() != null && PropertyHelper.getProperty(getProject(), getIf()) == null) {
+			skip = true;
+		}
+
+		if (getUnless() != null && PropertyHelper.getProperty(getProject(), getUnless()) != null) {
+			skip = true;
+		}
+
+		if (skip) {
+			log("Skipped.");
+			return;
+		}
+
 		try {
+			if (repo == null) {
+				throw new BuildException("The 'repo' attribute is required.");
+			}
+
 			checkProperties();
 
 			Git git = Git.open(repo);
