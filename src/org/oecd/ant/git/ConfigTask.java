@@ -51,6 +51,7 @@ public class ConfigTask extends AbstractGitTask {
 	protected void executeCustom(Git git) throws Exception {
 		StoredConfig conf = git.getRepository().getConfig();
 
+		// simulate inner element "option" for attributes properties
 		if (section != null || subsection != null || name != null || value != null || property != null) {
 			ConfigOptionElement option = new ConfigOptionElement(section, subsection, name, value, property);
 			options.add(0, option);
