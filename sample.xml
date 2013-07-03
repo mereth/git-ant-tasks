@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<project name="Validation ANT">
+<project name="sample">
 	
 	<taskdef resource="org/oecd/ant/git/antlib.xml">
 		<classpath>
 			<pathelement path="${basedir}\bin"/>
-			<pathelement location="E:\Sandbox\jgit\org.eclipse.egit.repository-2.3.1.201302201838-r\plugins\org.eclipse.jgit_2.3.1.201302201838-r.jar"/>
-			<pathelement location="E:\Sandbox\jgit\org.eclipse.egit.repository-2.3.1.201302201838-r\plugins\com.jcraft.jsch_0.1.46.v201205102330.jar"/>
+			<pathelement location="E:\Sandbox\jgit\org.eclipse.egit.repository-3.0.0.201306101825-r\plugins\org.eclipse.jgit_3.0.0.201306101825-r.jar"/>
+			<pathelement location="E:\Sandbox\jgit\org.eclipse.egit.repository-3.0.0.201306101825-r\plugins\com.jcraft.jsch_0.1.46.v201205102330.jar"/>
 		</classpath>
 	</taskdef>
 	
@@ -22,6 +22,12 @@
 		-->
 	</target>
 
+	<target name="test-config">
+		<gitconfig repo="${repo}" section="http" name="sslVerify" property="http.sslVerify">
+		</gitconfig>
+		<echo message="http.sslVerify: ${http.sslVerify}"/>
+	</target>
+	
 	<target name="test-clone">
 		<delete dir="${repo}"></delete>
 		<gitclone repo="${repo}" uri="${remote}" branch="dev-navigation"/>
