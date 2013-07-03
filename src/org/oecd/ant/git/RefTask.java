@@ -27,8 +27,9 @@ public class RefTask extends AbstractGitTask {
 
 	@Override
 	protected void checkProperties() throws Exception {
-		// TODO Auto-generated method stub
-
+		if (name == null) {
+			throw new BuildException("The reference name attribute must be set.");
+		}
 	}
 
 	@Override

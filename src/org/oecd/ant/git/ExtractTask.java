@@ -103,6 +103,10 @@ public class ExtractTask extends AbstractGitTask {
 		if (dstfile != null && dstdir != null) {
 			throw new BuildException("Only one of dstfile and dstdir may be set.");
 		}
+
+		if (srcfiles.size() > 0 && dstdir == null) {
+			throw new BuildException("dstdir must be set when using resource collection.");
+		}
 	}
 
 	@Override
