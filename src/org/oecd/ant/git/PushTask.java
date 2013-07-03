@@ -131,7 +131,10 @@ public class PushTask extends AbstractGitTask {
 		push.setDryRun(dryRun);
 		push.setForce(force);
 		push.setProgressMonitor(new SimpleProgressMonitor(this));
-		push.setReceivePack(receivePack);
+
+		if (receivePack != null) {
+			push.setReceivePack(receivePack);
+		}
 
 		List<RefSpec> rs = new ArrayList<RefSpec>();
 		if (refSpecs != null) {
