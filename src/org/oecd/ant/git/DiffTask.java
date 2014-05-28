@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.types.resources.FileResource;
+import org.apache.tools.ant.types.resources.Resources;
 import org.apache.tools.ant.util.FileUtils;
 import org.eclipse.jgit.api.DiffCommand;
 import org.eclipse.jgit.api.Git;
@@ -20,7 +21,6 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.treewalk.AbstractTreeIterator;
 import org.eclipse.jgit.treewalk.CanonicalTreeParser;
 import org.eclipse.jgit.treewalk.filter.PathFilter;
-import org.oecd.ant.git.types.GitFiles;
 
 public class DiffTask extends AbstractGitTask {
 
@@ -105,9 +105,9 @@ public class DiffTask extends AbstractGitTask {
 
 			List<DiffEntry> diffs = dc.call();
 
-			GitFiles added = new GitFiles();
-			GitFiles modified = new GitFiles();
-			GitFiles deleted = new GitFiles();
+			Resources added = new Resources();
+			Resources modified = new Resources();
+			Resources deleted = new Resources();
 
 			for (DiffEntry entry : diffs) {
 				switch (entry.getChangeType()) {

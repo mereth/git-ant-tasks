@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.oecd.ant</groupId>
   <artifactId>org.oecd.ant.git</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.1.0-SNAPSHOT</version>
   
   <build>
     <sourceDirectory>src</sourceDirectory>
@@ -52,44 +52,19 @@
     <dependency>
       <groupId>org.eclipse.jgit</groupId>
       <artifactId>org.eclipse.jgit</artifactId>
-      <version>3.0.0.201306101825-r</version>
+      <version>[3,)</version>
     </dependency>
     <dependency>
       <groupId>org.apache.ant</groupId>
       <artifactId>ant</artifactId>
-      <version>1.8.0</version>
+      <version>[1.8,)</version>
     </dependency>
     <dependency>
       <groupId>org.eclipse.jgit</groupId>
       <artifactId>org.eclipse.jgit.java7</artifactId>
-      <version>3.0.0.201306101825-r</version>
+      <version>[3,)</version>
       <scope>runtime</scope>
     </dependency>
   </dependencies>
   
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>com.jcraft</groupId>
-        <artifactId>jsch</artifactId>
-        <scope>runtime</scope>
-        <version>0.1.46</version>
-        <optional>true</optional>
-      </dependency>
-      <dependency>
-        <groupId>com.googlecode.javaewah</groupId>
-        <artifactId>JavaEWAH</artifactId>
-        <scope>runtime</scope>
-        <version>0.5.6</version>
-        <optional>true</optional>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.ant</groupId>
-        <artifactId>ant-launcher</artifactId>
-        <scope>runtime</scope>
-        <version>1.8.0</version>
-        <optional>true</optional>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
 </project>

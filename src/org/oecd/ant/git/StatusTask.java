@@ -5,10 +5,10 @@ import java.util.Set;
 import org.apache.tools.ant.PropertyHelper;
 import org.apache.tools.ant.types.ResourceCollection;
 import org.apache.tools.ant.types.resources.FileResource;
+import org.apache.tools.ant.types.resources.Resources;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.Status;
 import org.eclipse.jgit.api.StatusCommand;
-import org.oecd.ant.git.types.GitFiles;
 
 public class StatusTask extends AbstractGitTask {
 
@@ -107,7 +107,7 @@ public class StatusTask extends AbstractGitTask {
 	}
 
 	private ResourceCollection buildResourcesCollection(Set<String> source) {
-		GitFiles destination = new GitFiles();
+		Resources destination = new Resources();
 
 		for (String filename : source) {
 			destination.add(new FileResource(getRepo(), filename));
