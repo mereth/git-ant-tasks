@@ -121,6 +121,11 @@ public class ExtractTask extends AbstractGitTask {
 
 					String[] dstfiles = getMapper().mapFileName(rs.getName());
 
+					if (dstfiles == null) {
+						log("Skipping " + rs.getName());
+						continue;
+					}
+
 					for (String dstfile : dstfiles) {
 						extractFile(git, rs.getName(), FileUtils.getFileUtils().resolveFile(dstdir, dstfile));
 					}
