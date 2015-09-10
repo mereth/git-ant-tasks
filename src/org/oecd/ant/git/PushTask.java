@@ -163,7 +163,7 @@ public class PushTask extends AbstractGitTask {
 			try {
 				printPushResult(reader, result.getURI(), result);
 			} finally {
-				reader.release();
+				reader.close();
 			}
 		}
 	}

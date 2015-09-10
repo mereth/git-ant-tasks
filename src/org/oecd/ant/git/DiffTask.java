@@ -158,7 +158,7 @@ public class DiffTask extends AbstractGitTask {
 		try {
 			p.reset(reader, head);
 		} finally {
-			reader.release();
+			reader.close();
 		}
 		return p;
 	}
