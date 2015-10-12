@@ -53,6 +53,9 @@ Add file contents to the index.
 
 If set to `true`, the command only matches filepattern against already tracked files in the index rather than the working tree. That means that it will never stage new files, but that it will stage modified new contents of tracked files and that it will remove files from the index if the corresponding files in the working tree have been removed. In contrast to the git command line a filepattern must exist also if update is set to true as there is no concept of a working directory here. Default `false`.
 
+`all`
+If set to `true`, the command update the index not only where the working tree has a file matching the filepatterns but also where the index already has an entry. This adds, modifies, and removes index entries to match the working tree. Default `false`.
+
 `filepatterns`
 
 A list of space or comma separated files to add content from. Also a leading directory name (e.g. `dir` to add `dir/file1` and `dir/file2`) can be given to add all files in the directory, recursively. Fileglobs (e.g. `*.c`) are not yet supported. Default `.`.
