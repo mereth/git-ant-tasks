@@ -3,7 +3,15 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.oecd.ant</groupId>
   <artifactId>org.oecd.ant.git</artifactId>
-  <version>1.2.0-SNAPSHOT</version>
+  <version>1.2.0</version>
+  
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  
+  <scm>
+    <connection>scm:git:https://pacps01.oecd.org/gitblit/r/ant/git-ant-tasks.git</connection>
+  </scm>
   
   <repositories>
     <repository>
@@ -33,7 +41,7 @@
             <archive>
               <manifestEntries>
                 <Implementation-Title>Git Ant Tasks</Implementation-Title>
-                <Implementation-Version>${project.version}</Implementation-Version>
+                <Implementation-Version>${project.version}-${buildNumber}</Implementation-Version>
                 <Implementation-Vendor>OECD</Implementation-Vendor>
                 <Implementation-Vendor-Id>${project.groupId}</Implementation-Vendor-Id>
               </manifestEntries>
@@ -46,13 +54,49 @@
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.1</version>
         <configuration>
           <source>1.7</source>
           <target>1.7</target>
           <encoding>UTF-8</encoding>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>buildnumber-maven-plugin</artifactId>
+        <version>1.4</version>
+        <executions>
+          <execution>
+            <phase>validate</phase>
+            <goals>
+              <goal>create</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <doCheck>false</doCheck>
+          <doUpdate>false</doUpdate>
+          <shortRevisionLength>8</shortRevisionLength>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>2.4.1</version>
+        <configuration>
+          <descriptor>assembly.xml</descriptor>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
+    <finalName>${project.artifactId}-${project.version}-${buildNumber}</finalName>
   </build>
   
   <dependencies>
