@@ -10,4 +10,5 @@
   <taskdef name="gitpush" classname="org.oecd.ant.git.PushTask"/>
   <taskdef name="gitref" classname="org.oecd.ant.git.RefTask"/>
   <taskdef name="gitstatus" classname="org.oecd.ant.git.StatusTask"/>
+  <taskdef name="gitpull" classname="org.oecd.ant.git.PullTask"/>
 </antlib>

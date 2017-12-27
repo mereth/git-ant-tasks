@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project name="sample">
-	
+
 	<taskdef resource="org/oecd/ant/git/antlib.xml">
 		<classpath>
-			<pathelement path="${basedir}\bin"/>
-			<pathelement location="E:\Sandbox\jgit\org.eclipse.egit.repository-3.0.0.201306101825-r\plugins\org.eclipse.jgit_3.0.0.201306101825-r.jar"/>
-			<pathelement location="E:\Sandbox\jgit\org.eclipse.egit.repository-3.0.0.201306101825-r\plugins\com.jcraft.jsch_0.1.46.v201205102330.jar"/>
+			<pathelement path="${basedir}\target\classes" />
+			<pathelement location="C:\Users\Mereth\.m2\repository\org\eclipse\jgit\org.eclipse.jgit\4.1.0.201509280440-r\org.eclipse.jgit-4.1.0.201509280440-r.jar" />
+			<pathelement location="C:\Users\Mereth\.m2\repository\com\jcraft\jsch\0.1.53\jsch-0.1.53.jar" />
+			<pathelement location="C:\Users\Mereth\.m2\repository\org\slf4j\slf4j-api\1.7.12\slf4j-api-1.7.12.jar" />
+			<pathelement location="C:\Users\Mereth\.m2\repository\org\slf4j\slf4j-nop\1.7.12\slf4j-nop-1.7.12.jar" />
 		</classpath>
 	</taskdef>
-	
-	<property name="remote" value="E:\Sandbox\dlutwbootstrap-demo"/>
-	<property name="repo" value="F:\test"/>
-	
-	<target name="test"><!--
+
+	<property name="remote" value="https://github.com/mereth/git-ant-tasks.git" />
+	<property name="repo" value="K:\Tmp\testtask" />
+
+	<target name="test">
+		<!--
 
 		<gitdiff repo="${repo}" cached="true" oldrev="HEAD^"/>
 		<gitdiff repo="${repo}" output="test.diff"/>
@@ -25,46 +28,50 @@
 	<target name="test-config">
 		<gitconfig repo="${repo}" section="http" name="sslVerify" property="http.sslVerify">
 		</gitconfig>
-		<echo message="http.sslVerify: ${http.sslVerify}"/>
+		<echo message="http.sslVerify: ${http.sslVerify}" />
 	</target>
-	
+
 	<target name="test-clone">
-		<delete dir="${repo}"></delete>
-		<gitclone repo="${repo}" uri="${remote}" branch="dev-navigation"/>
+		<delete dir="${repo}">
+		</delete>
+		<gitclone repo="${repo}" uri="${remote}" branch="master" />
 	</target>
 
 	<target name="test-status">
-		<gitstatus repo="${repo}" modified="testid" isclean="pwet"/>
-		
+		<gitstatus repo="${repo}" modified="testid" isclean="pwet" />
+
 		<pathconvert property="dd">
-			<resources refid="testid"/>
+			<resources refid="testid" />
 		</pathconvert>
-		
-		<echo message="${dd}"/>
+
+		<echo message="${dd}" />
 	</target>
 
 	<target name="test-add">
-		<gitadd repo="${repo}" update="true"/>
+		<gitadd repo="${repo}" update="true" />
 	</target>
 
 	<target name="test-commit">
 		<gitcommit repo="${repo}" all="true" message="kikoo" revproperty="p-rev-commit" />
-		<echo message="${p-rev-commit}"/>
+		<echo message="${p-rev-commit}" />
 	</target>
-	
+
 	<target name="test-push">
-		<gitpush repo="${repo}"/>
+		<gitpush repo="${repo}" />
 	</target>
-	
+
 	<target name="test-ref">
-		<gitref repo="${repo}" name="HEAD" property="last"/>
-		<echo message="${last}"/>
+		<gitref repo="${repo}" name="HEAD" property="last" />
+		<echo message="${last}" />
 		<sequential>
-			<local name="last"/>
-			<gitref repo="${repo}" name="HEAD" property="last" length="8"/>
-			<echo message="${last}"/>
+			<local name="last" />
+			<gitref repo="${repo}" name="HEAD" property="last" length="8" />
+			<echo message="${last}" />
 		</sequential>
 	</target>
-	
-	
+
+	<target name="test-pull">
+		<gitpull repo="${repo}" />
+	</target>
+
 </project>

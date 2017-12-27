@@ -366,6 +366,10 @@ Files in index, but not filesystem (e.g. what you get if you call 'rm ...' on a 
 The id reference for the resources collection to create with the list of removed files.
 Files removed from index, but in HEAD (e.g. what you get if you call 'git rm ...' on a existing file).
 
+### Pull Task (`gitpull`)
+
+Fetch the remote tracked branch and rebase onto local branch.
+
 ## Git container task (`git`)
 
 This task can group a sequence of git tasks avoiding the need of the repo attribute on each of them.

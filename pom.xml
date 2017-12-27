@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.oecd.ant</groupId>
   <artifactId>org.oecd.ant.git</artifactId>
-  <version>1.2.0</version>
+  <version>1.3.0</version>
   
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
